@@ -18,6 +18,18 @@ form {
   margin-top: 25px;
 }
 
+button {
+  border: none;
+  border-radius: 8px;
+  background-color: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  transition: background-color 250ms ease-in;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -43,19 +55,16 @@ form {
 }
 
 .search-btn {
-  border: none;
-  border-radius: 8px;
   padding: 8px 16px;
-  background-color: #4e75ff;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-  color: #fff;
-  transition: background-color 250ms ease-in;
 }
 
-.search-btn:hover {
+.load-more {
+  padding: 8px 16px;
+  margin-top: 15px;
+}
+
+.search-btn:hover,
+.load-more:hover {
   background-color: #6c8cff;
 }
 
@@ -97,4 +106,8 @@ form {
   margin-left: auto;
   margin-right: auto;
   margin-top: 10px;
+}
+
+.load-more.is-hidden {
+  display: none;
 }
