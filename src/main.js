@@ -3,9 +3,12 @@ import SimpleLightbox from 'simplelightbox';
 import 'izitoast/dist/css/iziToast.min.css';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-import { createGalleryListTemplate } from './js/render-functions';
+import {
+  createGalleryListTemplate,
+  showLoader,
+  hideLoader,
+} from './js/render-functions';
 import { searchPhotoApi } from './js/pixabay-api';
-import { showLoader, hideLoader } from './js/render-functions.js';
 
 const form = document.querySelector('.main-form');
 const list = document.querySelector('.list-gallery');
