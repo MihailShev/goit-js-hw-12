@@ -26,6 +26,7 @@ const simplelightbox = new SimpleLightbox('.list-gallery a', {
 
 let page = 1;
 let userSearchQuery = '';
+let totalPages = '';
 
 const searchUserPhotoApi = async e => {
   try {
@@ -62,24 +63,23 @@ const searchUserPhotoApi = async e => {
       return;
     }
 
-    if (data.totalHits > 1) {
-      btnLoadMore.classList.remove('is-hidden');
-
-      btnLoadMore.addEventListener('click', getLoadMoreBtn);
-    }
-
+    totalPages = Math.ceil(data.totalHits / 15);
     const galleryTemplate = data.hits
       .map(el => createGalleryListTemplate(el))
       .join('');
 
     list.innerHTML = galleryTemplate;
-    simplelightbox;
+
+    if (page < totalPages) {
+      btnLoadMore.classList.remove('is-hidden');
+    }
+    btnLoadMore.addEventListener('click', getLoadMoreBtn);
 
     simplelightbox.refresh();
     form.reset();
-    hideLoader();
   } catch (error) {
     allert.show({ ...allertOptions, message: error.message });
+  } finally {
     hideLoader();
   }
 };
@@ -101,7 +101,7 @@ const getLoadMoreBtn = async e => {
     list.insertAdjacentHTML('beforeend', galleryTemplate);
     hideLoader();
 
-    if (page === data.totalHits) {
+    if (page >= totalPages) {
       btnLoadMore.classList.add('is-hidden');
 
       btnLoadMore.removeEventListener('click', getLoadMoreBtn);
