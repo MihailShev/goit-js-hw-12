@@ -52,7 +52,6 @@ const searchUserPhotoApi = async e => {
     }
 
     const { data } = await searchPhotoApi(userSearchQuery, page);
-    console.log(data);
 
     if (data.total === 0) {
       allert.show({
@@ -73,14 +72,13 @@ const searchUserPhotoApi = async e => {
       .join('');
 
     list.innerHTML = galleryTemplate;
+    simplelightbox.refresh();
+    form.reset();
 
     if (page < totalPages) {
       btnLoadMore.classList.remove('is-hidden');
     }
     btnLoadMore.addEventListener('click', getLoadMoreBtn);
-
-    simplelightbox.refresh();
-    form.reset();
   } catch (error) {
     allert.show({ ...allertOptions, message: error.message });
   } finally {
@@ -96,7 +94,6 @@ const getLoadMoreBtn = async e => {
     showLoader();
 
     const { data } = await searchPhotoApi(userSearchQuery, page);
-    console.log(data);
 
     const galleryTemplate = data.hits
       .map(el => createGalleryListTemplate(el))
@@ -104,6 +101,15 @@ const getLoadMoreBtn = async e => {
 
     list.insertAdjacentHTML('beforeend', galleryTemplate);
     hideLoader();
+    simplelightbox.refresh();
+    const elLi = document.querySelector('.gallery-item');
+    const rect = elLi.getBoundingClientRect();
+    const heightEl = rect.height * 2;
+
+    window.scrollBy({
+      top: heightEl,
+      behavior: 'smooth',
+    });
 
     if (page >= totalPages) {
       btnLoadMore.classList.add('is-hidden');
@@ -116,6 +122,7 @@ const getLoadMoreBtn = async e => {
     }
   } catch (error) {
     allert.show({ ...allertOptions, message: error.message });
+  } finally {
     hideLoader();
   }
 };
