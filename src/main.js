@@ -39,7 +39,11 @@ const searchUserPhotoApi = async e => {
     btnLoadMore.classList.add('is-hidden');
 
     if (userSearchQuery === '') {
-      allert.show({ ...allertOptions, message: 'Please enter a keyword' });
+      allert.show({
+        ...allertOptions,
+        color: 'orange',
+        message: 'Please enter a keyword',
+      });
 
       hideLoader();
       form.reset();
@@ -103,8 +107,12 @@ const getLoadMoreBtn = async e => {
 
     if (page >= totalPages) {
       btnLoadMore.classList.add('is-hidden');
-
       btnLoadMore.removeEventListener('click', getLoadMoreBtn);
+      allert.show({
+        ...allertOptions,
+        color: 'orange',
+        message: "We're sorry, but you've reached the end of search results.",
+      });
     }
   } catch (error) {
     allert.show({ ...allertOptions, message: error.message });
